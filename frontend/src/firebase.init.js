@@ -1,15 +1,15 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getAuth } from 'firebase/init'
+import { getAuth } from 'firebase/auth';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCn7gPLqR8bOByhTNLOIdQy9AVCiZdpTe0",
-  authDomain: "twitterclone-bfcc7.firebaseapp.com",
-  projectId: "twitterclone-bfcc7",
-  storageBucket: "twitterclone-bfcc7.appspot.com",
-  messagingSenderId: "396150036352",
-  appId: "1:396150036352:web:da671ed8bc3cc698899365",
-  measurementId: "G-0D7WTHVGY4"
+  apiKey: "AIzaSyCUWdUtxadXKC9kIei2jjRuAoWLns5e9ZQ",
+  authDomain: "social-fce4b.firebaseapp.com",
+  projectId: "social-fce4b",
+  storageBucket: "social-fce4b.appspot.com",
+  messagingSenderId: "375258248324",
+  appId: "1:375258248324:web:d2503c5e551b0206b7bed1",
+  measurementId: "G-T0CWFD7R9J"
 };
 
 const app = initializeApp(firebaseConfig);
