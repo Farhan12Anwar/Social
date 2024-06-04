@@ -1,0 +1,86 @@
+.post {
+    display: flex;
+    align-items: flex-start;
+    border-bottom: 1px solid var(--twitter-background);
+    padding-bottom: 10px;
+}
+
+.post_body {
+    flex: 1;
+    padding: 10px;
+}
+
+.post_body>img {
+    border-radius: 20px;
+}
+
+.post_footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px;
+    margin-top: 10px;
+}
+
+.post_footer_icon:hover {
+    cursor: pointer;
+    color: var(--twitter-color);
+}
+
+.post_headerDescription {
+    margin-bottom: 10px;
+    font-size: 15px;
+}
+
+.post_headerText>h3 {
+    font-size: 15px;
+    margin-bottom: 5px;
+}
+
+.post_badge {
+    font-size: 14px !important;
+    color: var(--twitter-color);
+}
+
+.post_headerSpecial {
+    font-weight: 600;
+    font-size: 12px;
+    color: gray;
+}
+
+.post_avatar {
+    padding: 20px;
+}
+
+.post_footer_icon_container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .post_footer_icon_container {
+    position: relative;
+    display: inline-block;
+    margin-right: 8px; /* Adjust margin to space out icons */
+  }
+  
+  .icon_placeholder {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 100%; /* Position the tooltip above the icon */
+    left: 50%;
+    margin-left: -60px; /* Center the tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  
+  .post_footer_icon_container:hover .icon_placeholder {
+    visibility: visible;
+    opacity: 1;
+  }
+  
