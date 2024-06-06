@@ -5,11 +5,11 @@ import Login from './pages/Login/Login';
 import Signup from './pages/Login/Signup';
 import ProtectedRoute from './pages/ProtectedRoute';
 import Feed from './pages/Feed/Feed.js'
-import Explore from './pages/Explore/Explore.js';
+import TopPosts from './pages/TopPosts/TopPosts.js';
 import Notifications from './pages/Notifications/Notifications.js';
 import Messages from './pages/Messages/Messages.js';
 import Bookmarks from './pages/Bookmarks/Bookmarks.js';
-import Lists from './pages/Lists/Lists.js';
+import Poll from './pages/Poll/Poll.js';
 import Profile from './pages/Profile/Profile.js';
 import More from './pages/More/More.js';
 
@@ -23,11 +23,11 @@ function App() {
           </Route>
           <Route path='/home' element={<ProtectedRoute><Home /></ProtectedRoute>}>
             <Route path='feed' element={<Feed />} />
-            <Route path='explore' element={<Explore />} />
+            <Route path='topPosts' element={<TopPosts />} />
             <Route path='notifications' element={<Notifications />} />
             <Route path='messages' element={<Messages />} />
             <Route path='bookmarks' element={<Bookmarks />} />
-            <Route path='lists' element={<Lists />} />
+            <Route path='poll' element={<Poll />} />
             <Route path='profile' element={<Profile />} />
             <Route path='more' element={<More />} />
             

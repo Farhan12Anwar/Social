@@ -1,12 +1,12 @@
 import React from 'react';
 import '../Page.css';
 
-const Explore = () => {
+const Poll = () => {
   return (
      <div className='page'>
-      <h2 className='pageTitle'>Welcome to Explore</h2>
+      <h2 className='pageTitle'>Welcome to Poll</h2>
     </div>
   )
 }
 
-export default Explore
+export default Poll

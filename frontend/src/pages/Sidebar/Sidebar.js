@@ -42,28 +42,37 @@ const Sidebar = ({handleLogout, user}) => {
 
     return (
         <div className='sidebar'>
+
             <TwitterIcon className='sidebar__twitterIcon' />
+
             <CustomLink to='/home/feed'>
             <SidebarOptions active Icon={HomeIcon} text='Home' />
             </CustomLink>
-            <CustomLink to='/home/explore'>
-                <SidebarOptions active Icon={SearchIcon} text='Explore' />
-            </CustomLink>
-            <CustomLink to='/home/notifications'>
-                <SidebarOptions active Icon={NotificationsNoneIcon} text='Notifications' />
-                </CustomLink>
+
             <CustomLink to='/home/messages'>
             <SidebarOptions active Icon={MailOutlineIcon} text='Messages' />
             </CustomLink>
+
             <CustomLink to='/home/bookmarks'>
             <SidebarOptions active Icon={BookmarkBorderIcon} text='Bookmarks' />
         </CustomLink>
-            <CustomLink to='/home/lists'>
-            <SidebarOptions active Icon={ListAltIcon} text='Lists' />
+
+            <CustomLink to='/home/TopPosts'>
+                <SidebarOptions active Icon={SearchIcon} text='Top Posts' />
             </CustomLink>
+
+            <CustomLink to='/home/notifications'>
+                <SidebarOptions active Icon={NotificationsNoneIcon} text='Notifications' />
+                </CustomLink>
+
+            <CustomLink to='/home/poll'>
+            <SidebarOptions active Icon={ListAltIcon} text='Poll' />
+            </CustomLink>
+
             <CustomLink to='/home/profile'>
             <SidebarOptions active Icon={PermIdentityIcon} text='Profile' />
             </CustomLink> 
+
             <CustomLink to='/home/more'>
             <SidebarOptions active Icon={MoreIcon} text='More' />
             </CustomLink> 
