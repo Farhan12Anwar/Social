@@ -68,9 +68,11 @@ const Sidebar = ({handleLogout, user}) => {
             <SidebarOptions active Icon={MoreIcon} text='More' />
             </CustomLink> 
 
+            <CustomLink to='/home/feed'>
             <Button variant='outlined' className='sidebar_tweet'>
-                Tweet
+            Tweet
             </Button>
+            </CustomLink> 
 
             <div className='Profile_info'>
                 <Avatar src={userProfilePic} />

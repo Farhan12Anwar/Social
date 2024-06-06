@@ -1,4 +1,5 @@
 const { MongoClient, ServerApiVersion } = require('mongodb');
+const { ObjectId } = require('mongodb');
 const express = require('express');
 const cors = require('cors');
 const app = express();
@@ -24,21 +25,23 @@ async function run() {
     const postCollection = client.db('database').collection('posts');
     const userCollection = client.db('database').collection('users');
 
-    app.delete('/post/:postId', async (req, res) => {
-        const postId = req.params.postId;
-        console.log(postId)
-        try {
-          const result = await postCollection.deleteOne({ _id: postId });
+    app.delete('/posts/:postId', async (req, res) => {
+      const postId = req.params.postId;
+      console.log(postId)
+      try {
+          const result = await postCollection.deleteOne({ _id: new ObjectId(postId) }); // Delete the post by _id
           if (result.deletedCount === 1) {
-            res.json({ success: true });
+              res.status(200).json({ message: 'Post deleted successfully' }); // Send success message if post is deleted
           } else {
-            res.status(404).json({ success: false, message: 'Post not found' });
+              res.status(404).json({ error: 'Post not found' }); // Send error message if post is not found
           }
-        } catch (error) {
+      } catch (error) {
           console.error('Error deleting post:', error);
-          res.status(500).json({ success: false, message: 'Internal server error' });
-        }
-      });
+          res.status(500).json({ error: 'Internal server error' }); // Send internal server error message for other errors
+      }
+  });
+    
+    
       
 
     app.get('/post', async (req, res) => {
