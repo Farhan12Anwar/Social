@@ -35,31 +35,7 @@ function EditChild({ dob, setDob }) {
 
   return (
     <React.Fragment>
-      {/* <div className='birthdate-section' onClick={handleOpen}>
-        <text>Edit</text>
-      </div> */}
-      {/* <Modal
-        hideBackdrop
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="child-modal-title"
-        aria-describedby="child-modal-description"
-      > */}
-        {/* <Box sx={{ ...style, width: 300, height: 300 }}> */}
-          {/* <div className='text'> */}
-            {/* <h2>Edit date of birth?</h2>
-            <p>This can only be changed a few times.<br />
-              Make sure you enter the age of the <br />
-              person using the account. </p> */}
-            {/* <Button className='e-button'>Edit</Button> */}
-            {/* <input
-              type="date"
-              onChange={e => setDob(e.target.value)}
-            />
-            <Button className='e-button' onClick={() => { setOpen(false); }}>Cancel</Button>
-          </div> */}
-        {/* </Box> */}
-      {/* </Modal> */}
+     
     </React.Fragment>
   );
 }
@@ -128,30 +104,7 @@ export default function EditProfile({ user, loggedInUser }) {
             <TextField className='text-field' fullWidth label="Location" id="fullWidth" variant='filled' onChange={(e) => setLocation(e.target.value)} defaultValue={loggedInUser[0]?.location ? loggedInUser[0].location : ''} />
             <TextField className='text-field' fullWidth label="Website" id="fullWidth" variant='filled' onChange={(e) => setWebsite(e.target.value)} defaultValue={loggedInUser[0]?.website ? loggedInUser[0].website : ''} />
           </form>
-          {/* <div className='birthdate-section'>
-            <p>Birth Date</p>
-            <p>.</p>
-            <EditChild dob={dob} setDob={setDob} />
-          </div> */}
-          {/* <div className='last-section'>
-            {
-              loggedInUser[0]?.dob ?
-                <h2>{loggedInUser[0].dob}</h2> :
-                <h2>
-                  {
-                    dob
-                      ?
-                      dob
-                      :
-                      'Add your date of birth'
-                  }
-                </h2>
-            } */}
-            {/* <div className='last-btn'>
-              <h2>Switch to professional </h2>
-              <ChevronRightIcon />
-            </div> */}
-          {/* </div> */}
+       
         </Box>
       </Modal>
     </div>

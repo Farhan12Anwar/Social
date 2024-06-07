@@ -24,7 +24,7 @@ const MainProfile = ({ user }) => {
     fetch(`http://localhost:5000/userPost?email=${user?.email}`)
       .then(res => res.json())
       .then(data => {
-        setPosts(data);
+        setPosts(data.reverse()); // Reverse the order of posts here
       })
   }, [user?.email]);
 

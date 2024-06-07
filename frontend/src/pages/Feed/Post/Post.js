@@ -7,8 +7,12 @@ import RepeatIcon from "@mui/icons-material/Repeat";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import PublishIcon from "@mui/icons-material/Publish";
 
-function Post({ p, handleRetweet }) {
+function Post({ p, onRetweet }) {
   const { name, username, photo, post, profilePhoto } = p;
+
+  const handlePostClick = () => {
+    console.log("Post.js line-15");
+  };
 
   async function downloadImage(imageSrc, nameOfDownload = 'my-image.png') {
     const response = await fetch(imageSrc);
@@ -22,8 +26,15 @@ function Post({ p, handleRetweet }) {
     document.body.removeChild(anchorElement);
   }
 
+  const handleRetweet = () => {
+    // Pass the image URL to the onRetweet callback
+    onRetweet(photo);
+    // Scroll to the top of the page
+
+  };
+
   return (
-    <div className="post">
+    <div className="post" onClick={handlePostClick}>
       <div className="post_avatar">
         <Avatar src={profilePhoto} />
       </div>
@@ -40,19 +51,16 @@ function Post({ p, handleRetweet }) {
             <p>{post}</p>
           </div>
         </div>
-        {photo && (
-          <img src={photo} alt="Post" width="500" />
-        )}
+        <img src={photo} alt="" width="500" onClick={() => downloadImage(photo)} />
         <div className="post_footer">
           <div className="post_footer_icon_container">
             <ChatBubbleOutlineIcon className="post_footer_icon" fontSize="small" />
             <span className="icon_placeholder">Comment</span>
           </div>
-          <div className="post_footer_icon_container" onClick={() => { handleRetweet(p); }}>
-  <RepeatIcon className="post_footer_icon" fontSize="small" />
-  <span className="icon_placeholder" >Retweet</span>
-</div>
-
+          <div className="post_footer_icon_container">
+            <RepeatIcon className="post_footer_icon" fontSize="small" onClick={handleRetweet} />
+            <span className="icon_placeholder">Retweet</span>
+          </div>
           <div className="post_footer_icon_container">
             <FavoriteBorderIcon className="post_footer_icon" fontSize="small" />
             <span className="icon_placeholder">Like</span>

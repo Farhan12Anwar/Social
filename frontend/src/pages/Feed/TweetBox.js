@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./TweetBox.css";
 import { Avatar, Button } from "@mui/material";
 import AddPhotoAlternateOutlinedIcon from '@mui/icons-material/AddPhotoAlternateOutlined';
@@ -9,7 +9,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const TweetBox = ({ setPosts, updatePosts, retweetedPost }) => {
+const TweetBox = ({ setPosts, updatePosts, retweetImage, setRetweetImage  }) => {
     const [post, setPost] = useState('');
     const [imageURL, setImageURL] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -18,13 +18,6 @@ const TweetBox = ({ setPosts, updatePosts, retweetedPost }) => {
     const [loggedInUser] = useLoggedInUser();
     const [user] = useAuthState(auth);
     const email = user?.email;
-
-    useEffect(() => {
-        if (retweetedPost) {
-            setPost(`RT @${retweetedPost.name}: ${retweetedPost.post}`);
-            setImageURL(retweetedPost.photo);
-        }
-    }, [retweetedPost]);
 
     const userProfilePic = loggedInUser[0]?.profileImage ? loggedInUser[0]?.profileImage : 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png';
 
@@ -48,12 +41,13 @@ const TweetBox = ({ setPosts, updatePosts, retweetedPost }) => {
 
     const handleTweet = (e) => {
         e.preventDefault();
-        
-        if (!post.trim() && !imageURL) {
+    
+        // Check if tweet is empty and no image is uploaded
+        if (!post.trim() && !imageURL && !retweetImage) {
             toast.error("The tweet cannot be empty!");
             return;
         }
-
+    
         if (user.providerData[0].providerId === 'password') {
             fetch(`http://localhost:5000/loggodInUser?email=${email}`)
                 .then(res => res.json())
@@ -65,7 +59,7 @@ const TweetBox = ({ setPosts, updatePosts, retweetedPost }) => {
             setName(user?.displayName);
             setUsername(email?.split('@')[0]);
         }
-
+    
         if (name) {
             const userPost = {
                 profilePhoto: userProfilePic,
@@ -73,9 +67,9 @@ const TweetBox = ({ setPosts, updatePosts, retweetedPost }) => {
                 name: name,
                 email: email,
                 post: post,
-                photo: imageURL
+                photo: imageURL || retweetImage
             };
-
+    
             fetch('http://localhost:5000/post', {
                 method: "POST",
                 headers: {
@@ -89,15 +83,17 @@ const TweetBox = ({ setPosts, updatePosts, retweetedPost }) => {
                 updatePosts(prevPosts => [data, ...prevPosts]);
                 setPost('');
                 setImageURL('');
+                setRetweetImage(''); // Reset retweetImage state
                 setIsLoading(false);
             })
         }
     };
+    
 
     return (
         <div className="tweetBox">
             <form onSubmit={handleTweet}>
-                <div className="tweetBox_input">
+                <div className="tweetBox_input" id="top">
                     <Avatar src={userProfilePic} />
                     <input
                         type="text"
@@ -106,14 +102,13 @@ const TweetBox = ({ setPosts, updatePosts, retweetedPost }) => {
                         onChange={(e) => setPost(e.target.value)}
                     />
                 </div>
-                {imageURL && (
-                    <div className="uploadedImageContainer">
-                        <img src={imageURL} className="uploadedImage" alt="Uploaded" />
-                    </div>
-                )}
+                {imageURL && <img src={imageURL} alt="Uploaded Image" style={{ maxWidth: "100%", height: "50vh" }} />} {/* Apply styles to adjust the size */}
+                {retweetImage && !imageURL && <img src={retweetImage} alt="Retweeted Image" style={{ maxWidth: "100%", height: "50vh" }} />} {/* Apply styles to adjust the size */}
                 <div className="imageIcon_tweetButton">
                     <label htmlFor='image' className="imageIcon">
-                        {isLoading ? <p>Loading...</p> : <p>{imageURL ? 'Image uploaded' : <AddPhotoAlternateOutlinedIcon />}</p>}
+                        {
+                            isLoading ? <p>Uploading image</p> : <p>{imageURL ? 'image uploaded' : <AddPhotoAlternateOutlinedIcon />}</p>
+                        }
                     </label>
                     <input
                         type="file"
@@ -123,11 +118,7 @@ const TweetBox = ({ setPosts, updatePosts, retweetedPost }) => {
                     />
                     <Button
                         className="tweetBox_tweetButton"
-                        type="submit"
-                        disabled={isLoading}
-                    >
-                        Tweet
-                    </Button>
+                        type="submit">Tweet</Button>
                 </div>
             </form>
             <ToastContainer />

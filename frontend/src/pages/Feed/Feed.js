@@ -2,30 +2,18 @@ import React, { useEffect, useState } from "react";
 import Post from "./Post/Post";
 import "./Feed.css";
 import TweetBox from "./TweetBox";
-import $ from 'jquery';
 
 function Feed() {
     const [posts, setPosts] = useState([]);
-    const [retweetedPost, setRetweetedPost] = useState(null);
-
-    const clearTweetBox = () => {
-        setRetweetedPost(null);
-    };
+    const [retweetImage, setRetweetImage] = useState('');
 
     const updatePosts = (newPosts) => {
         setPosts(newPosts);
     };
 
-    useEffect(() => {
-        fetch('http://localhost:5000/post')
-            .then(res => res.json())
-            .then(data => {
-                setPosts(data.reverse());
-            });
-    }, []);
-
-    const handleRetweet = (tweet) => {
-        setRetweetedPost(tweet);
+    const handleRetweet = (imageURL) => {
+        // Update retweetImage state with the image URL
+        setRetweetImage(imageURL);
         window.scrollTo({
             top: 0,
             left: 0,
@@ -39,21 +27,24 @@ function Feed() {
         scrollToTopButton.scrollIntoView({ behavior: "smooth" });
       };
 
+    useEffect(() => {
+        fetch('http://localhost:5000/post')
+            .then(res => res.json())
+            .then(data => {
+                setPosts(data.reverse());
+            })
+    }, [posts]);
+
     return (
-        <div className="feed" >
-            <div id="top"></div>
+        <div className="feed">
             <div className="feed__header">
                 <h2>Home</h2>
             </div>
-            <TweetBox 
-                setPosts={setPosts} 
-                clearTweetBox={clearTweetBox} 
-                updatePosts={updatePosts} 
-                retweetedPost={retweetedPost} 
-            />
-            {posts.map(p => (
-                <Post key={p._id} p={p} handleRetweet={handleRetweet} />
-            ))}
+            <TweetBox setPosts={setPosts} updatePosts={updatePosts} retweetImage={retweetImage} setRetweetImage={setRetweetImage} />
+
+            {
+                posts.map(p => <Post key={p._id} p={p} onRetweet={handleRetweet} />)
+            }
         </div>
     );
 }
