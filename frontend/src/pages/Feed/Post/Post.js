@@ -7,12 +7,8 @@ import RepeatIcon from "@mui/icons-material/Repeat";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import PublishIcon from "@mui/icons-material/Publish";
 
-function Post({ p, clearTweetBox }) {
+function Post({ p, handleRetweet }) {
   const { name, username, photo, post, profilePhoto } = p;
-
-  const handlePostClick = () => {
-    console.log("Post.js line-15");
-  };
 
   async function downloadImage(imageSrc, nameOfDownload = 'my-image.png') {
     const response = await fetch(imageSrc);
@@ -27,7 +23,7 @@ function Post({ p, clearTweetBox }) {
   }
 
   return (
-    <div className="post" onClick={handlePostClick}>
+    <div className="post">
       <div className="post_avatar">
         <Avatar src={profilePhoto} />
       </div>
@@ -44,16 +40,19 @@ function Post({ p, clearTweetBox }) {
             <p>{post}</p>
           </div>
         </div>
-        <img src={photo} alt="" width="500" onClick={() => downloadImage(photo)} />
+        {photo && (
+          <img src={photo} alt="Post" width="500" />
+        )}
         <div className="post_footer">
           <div className="post_footer_icon_container">
             <ChatBubbleOutlineIcon className="post_footer_icon" fontSize="small" />
             <span className="icon_placeholder">Comment</span>
           </div>
-          <div className="post_footer_icon_container">
-            <RepeatIcon className="post_footer_icon" fontSize="small" />
-            <span className="icon_placeholder">Retweet</span>
-          </div>
+          <div className="post_footer_icon_container" onClick={() => { handleRetweet(p); }}>
+  <RepeatIcon className="post_footer_icon" fontSize="small" />
+  <span className="icon_placeholder" >Retweet</span>
+</div>
+
           <div className="post_footer_icon_container">
             <FavoriteBorderIcon className="post_footer_icon" fontSize="small" />
             <span className="icon_placeholder">Like</span>

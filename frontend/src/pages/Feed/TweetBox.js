@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./TweetBox.css";
 import { Avatar, Button } from "@mui/material";
 import AddPhotoAlternateOutlinedIcon from '@mui/icons-material/AddPhotoAlternateOutlined';
@@ -9,7 +9,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const TweetBox = ({ setPosts, updatePosts }) => {
+const TweetBox = ({ setPosts, updatePosts, retweetedPost }) => {
     const [post, setPost] = useState('');
     const [imageURL, setImageURL] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -18,6 +18,13 @@ const TweetBox = ({ setPosts, updatePosts }) => {
     const [loggedInUser] = useLoggedInUser();
     const [user] = useAuthState(auth);
     const email = user?.email;
+
+    useEffect(() => {
+        if (retweetedPost) {
+            setPost(`RT @${retweetedPost.name}: ${retweetedPost.post}`);
+            setImageURL(retweetedPost.photo);
+        }
+    }, [retweetedPost]);
 
     const userProfilePic = loggedInUser[0]?.profileImage ? loggedInUser[0]?.profileImage : 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png';
 
@@ -42,12 +49,11 @@ const TweetBox = ({ setPosts, updatePosts }) => {
     const handleTweet = (e) => {
         e.preventDefault();
         
-        // Check if tweet is empty and no image is uploaded
         if (!post.trim() && !imageURL) {
             toast.error("The tweet cannot be empty!");
             return;
         }
-
+    
         if (user.providerData[0].providerId === 'password') {
             fetch(`http://localhost:5000/loggodInUser?email=${email}`)
                 .then(res => res.json())
@@ -59,7 +65,7 @@ const TweetBox = ({ setPosts, updatePosts }) => {
             setName(user?.displayName);
             setUsername(email?.split('@')[0]);
         }
-
+    
         if (name) {
             const userPost = {
                 profilePhoto: userProfilePic,
@@ -69,7 +75,7 @@ const TweetBox = ({ setPosts, updatePosts }) => {
                 post: post,
                 photo: imageURL
             };
-
+    
             fetch('http://localhost:5000/post', {
                 method: "POST",
                 headers: {
@@ -84,9 +90,11 @@ const TweetBox = ({ setPosts, updatePosts }) => {
                 setPost('');
                 setImageURL('');
                 setIsLoading(false);
+                window.location.reload(); // Refresh the page
             })
         }
     };
+    
 
     return (
         <div className="tweetBox">
@@ -100,11 +108,14 @@ const TweetBox = ({ setPosts, updatePosts }) => {
                         onChange={(e) => setPost(e.target.value)}
                     />
                 </div>
+                {imageURL && (
+                    <div className="uploadedImageContainer">
+                        <img src={imageURL} className="uploadedImage" alt="Uploaded" />
+                    </div>
+                )}
                 <div className="imageIcon_tweetButton">
                     <label htmlFor='image' className="imageIcon">
-                        {
-                            isLoading ? <p>Uploading image</p> : <p>{imageURL ? 'image uploaded' : <AddPhotoAlternateOutlinedIcon />}</p>
-                        }
+                        {isLoading ? <p>Loading...</p> : <p>{imageURL ? 'Image uploaded' : <AddPhotoAlternateOutlinedIcon />}</p>}
                     </label>
                     <input
                         type="file"
@@ -114,7 +125,11 @@ const TweetBox = ({ setPosts, updatePosts }) => {
                     />
                     <Button
                         className="tweetBox_tweetButton"
-                        type="submit">Tweet</Button>
+                        type="submit"
+                        disabled={isLoading}
+                    >
+                        Tweet
+                    </Button>
                 </div>
             </form>
             <ToastContainer />
