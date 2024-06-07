@@ -53,7 +53,7 @@ const TweetBox = ({ setPosts, updatePosts, retweetedPost }) => {
             toast.error("The tweet cannot be empty!");
             return;
         }
-    
+
         if (user.providerData[0].providerId === 'password') {
             fetch(`http://localhost:5000/loggodInUser?email=${email}`)
                 .then(res => res.json())
@@ -65,7 +65,7 @@ const TweetBox = ({ setPosts, updatePosts, retweetedPost }) => {
             setName(user?.displayName);
             setUsername(email?.split('@')[0]);
         }
-    
+
         if (name) {
             const userPost = {
                 profilePhoto: userProfilePic,
@@ -75,7 +75,7 @@ const TweetBox = ({ setPosts, updatePosts, retweetedPost }) => {
                 post: post,
                 photo: imageURL
             };
-    
+
             fetch('http://localhost:5000/post', {
                 method: "POST",
                 headers: {
@@ -90,11 +90,9 @@ const TweetBox = ({ setPosts, updatePosts, retweetedPost }) => {
                 setPost('');
                 setImageURL('');
                 setIsLoading(false);
-                window.location.reload(); // Refresh the page
             })
         }
     };
-    
 
     return (
         <div className="tweetBox">
