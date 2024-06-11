@@ -42,12 +42,7 @@ const [
     const handleSubmit = e => {
         e.preventDefault();
         console.log(email, password);
-
-        try{
-          createUserWithEmailAndPassword(email, password);
-        } catch(error) {
-          console.log(error)
-        }
+        createUserWithEmailAndPassword(email, password);
 
         const user = {
             username: username,
@@ -55,7 +50,7 @@ const [
             email: email,
         }
 
-        // const { data } = axios.post(`http://localhost:5000/register`, user);
+        const { data } = axios.post(`http://localhost:5000/register`, user);
         // console.log(user);
     };
 
@@ -110,7 +105,6 @@ const [
                         className='g-btn'
                             type='light'
                             onClick={handleGoogleSignIn}
-                            style={{ width: '100%' }}
                     />
                 </div>
                 <div>

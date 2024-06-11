@@ -49,11 +49,13 @@ async function run() {
       res.send(post);
     });
 
-    app.get('/loggodInUser', async (req, res) => {
-      const email = req.query.email;
+    app.get('/loggodInUser/:email', async (req, res) => {
+      const email = req.params.email; // Access email from route parameters
       const user = await userCollection.find({ email: email }).toArray();
+      console.log(user);
       res.send(user);
-    })
+    });
+    
 
     app.get('/userPost', async (req, res) => {
       const email = req.query.email;
