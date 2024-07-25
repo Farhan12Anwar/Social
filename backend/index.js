@@ -26,18 +26,18 @@ async function run() {
     const userCollection = client.db('database').collection('users');
 
     app.delete('/posts/:postId', async (req, res) => {
-      const postId = req.params.postId;
+      const postId = req.params.postId; 
       console.log(postId)
       try {
-          const result = await postCollection.deleteOne({ _id: new ObjectId(postId) }); // Delete the post by _id
+          const result = await postCollection.deleteOne({ _id: new ObjectId(postId) });
           if (result.deletedCount === 1) {
-              res.status(200).json({ message: 'Post deleted successfully' }); // Send success message if post is deleted
+              res.status(200).json({ message: 'Post deleted successfully' });
           } else {
-              res.status(404).json({ error: 'Post not found' }); // Send error message if post is not found
+              res.status(404).json({ error: 'Post not found' }); 
           }
       } catch (error) {
           console.error('Error deleting post:', error);
-          res.status(500).json({ error: 'Internal server error' }); // Send internal server error message for other errors
+          res.status(500).json({ error: 'Internal server error' });
       }
   });
     
@@ -50,7 +50,7 @@ async function run() {
     });
 
     app.get('/loggodInUser/:email', async (req, res) => {
-      const email = req.params.email; // Access email from route parameters
+      const email = req.params.email; 
       const user = await userCollection.find({ email: email }).toArray();
       console.log(user);
       res.send(user);
@@ -79,7 +79,7 @@ async function run() {
       const result = await userCollection.insertOne(user);
       res.send(result);
     });
-
+      
     
 
     app.patch('/userUpdates/:email', async (req, res) => {

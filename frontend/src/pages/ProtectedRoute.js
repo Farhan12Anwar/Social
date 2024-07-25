@@ -8,7 +8,7 @@ const ProtectedRoute = ({children}) => {
     const [user, isLoading] = useAuthState(auth);
 
     if (isLoading) {
-        return <PageLoading />
+        return <PageLoading />  
     }
 
     if (!user) {

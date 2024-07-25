@@ -1,6 +1,6 @@
 .feed {
     flex: 0.4;
-    border-right: 1px solid var(--twitter-background);
+    /* border-right: 1px solid black; */
     min-width: fit-content;
     overflow-y: scroll;
 }
@@ -10,12 +10,16 @@
 }
 
 .feed__header {
+    display: flex;
+    justify-content: space-around;
+    color: black;
     position: sticky;
     top: 0;
     background-color: white;
     z-index: 100;
-    border: 1px solid var(--twitter-background);
+    /* border: 1px solid black !important; */
     padding: 15px 20px;
+    height:30px;
 }
 
 .feed__header>h2 {

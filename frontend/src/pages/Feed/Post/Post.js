@@ -8,7 +8,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import PublishIcon from "@mui/icons-material/Publish";
 
 function Post({ p, onRetweet }) {
-  const { name, username, photo, post, profilePhoto } = p;
+  const { name, email, username, photo, post, profilePhoto } = p;
 
   const handlePostClick = () => {
     console.log("Post.js line-15");
@@ -66,8 +66,8 @@ function Post({ p, onRetweet }) {
             <span className="icon_placeholder">Like</span>
           </div>
           <div className="post_footer_icon_container">
-            <PublishIcon className="post_footer_icon" fontSize="small" onClick={() => downloadImage(photo)} />
-            <span className="icon_placeholder">Download</span>
+            <PublishIcon className="post_footer_icon" fontSize="small" />
+            <span className="icon_placeholder">Share</span>
           </div>
         </div>
       </div>

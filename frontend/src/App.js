@@ -16,7 +16,7 @@ import More from './pages/More/More.js';
 function App() {
   return (
     <div className="App">
-         <BrowserRouter>
+         <BrowserRouter>  
         <Routes>
           <Route path='/' element={<ProtectedRoute><Home /></ProtectedRoute>} >
             <Route index element={<Feed />} />

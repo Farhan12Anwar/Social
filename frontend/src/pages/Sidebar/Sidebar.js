@@ -43,37 +43,37 @@ const Sidebar = ({ handleLogout, user }) => {
                 <SidebarOptions active Icon={HomeIcon} text='Home' />
             </CustomLink>
 
-            <CustomLink to='/home/messages'>
+            {/* <CustomLink to='/home/messages'>
                 <SidebarOptions active Icon={MailOutlineIcon} text='Messages' />
-            </CustomLink>
+            </CustomLink> */}
 
-            <CustomLink to='/home/bookmarks'>
+            {/* <CustomLink to='/home/bookmarks'>
                 <SidebarOptions active Icon={BookmarkBorderIcon} text='Bookmarks' />
-            </CustomLink>
+            </CustomLink> */}
 
-            <CustomLink to='/home/TopPosts'>
+            {/* <CustomLink to='/home/TopPosts'>
                 <SidebarOptions active Icon={SearchIcon} text='Top Posts' />
-            </CustomLink>
+            </CustomLink> */}
 
-            <CustomLink to='/home/notifications'>
+            {/* <CustomLink to='/home/notifications'>
                 <SidebarOptions active Icon={NotificationsNoneIcon} text='Notifications' />
-            </CustomLink>
+            </CustomLink> */}
 
-            <CustomLink to='/home/poll'>
+            {/* <CustomLink to='/home/poll'>
                 <SidebarOptions active Icon={ListAltIcon} text='Poll' />
-            </CustomLink>
+            </CustomLink> */}
 
             <CustomLink to='/home/profile'>
                 <SidebarOptions active Icon={PermIdentityIcon} text='Profile' />
             </CustomLink> 
 
-            <CustomLink to='/home/more'>
+            {/* <CustomLink to='/home/more'>
                 <SidebarOptions active Icon={MoreIcon} text='More' />
-            </CustomLink> 
+            </CustomLink>  */}
 
             <CustomLink to='/home/feed'>
                 <Button variant='outlined' className='sidebar_tweet'>
-                    Tweet
+                    Post
                 </Button>
             </CustomLink> 
 

@@ -1,28 +1,29 @@
 import {React, useState} from 'react';
-import twitterImage from '../../assets/images/twitter.jpeg';
-import TwitterIcon from '@mui/icons-material/Twitter';
 import {useSignInWithEmailAndPassword,useSignInWithGoogle} from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify';
 import GoogleButton from 'react-google-button';
 import { Link, useNavigate } from 'react-router-dom';
 import './Login.css';
 
 const Login = () => {
-
+  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setError] = useState('');
   const navigate = useNavigate();
-
+  
   const [
-  signInWithEmailAndPassword,
-  user,
-  loading,
-  error,
+    signInWithEmailAndPassword,
+    user,
+    loading,
+    error,
   ] = useSignInWithEmailAndPassword(auth);
   
   const [signInWithGoogle, googleUser, googleLoading, googleError] = useSignInWithGoogle(auth);
   
+  const notify = () => toast.error("Invalid Username or Password");
   if (user || googleUser) {
       navigate("/");
         console.log(user);
@@ -30,34 +31,36 @@ const Login = () => {
     }
 
     if (error) {
-        console.log(error.message);
+      console.log(error.message);
     }
 
     if (loading) {
         console.log("LOADING...")
     }
 
+    
+    const handleSubmit = e => {
+      e.preventDefault();
+      console.log(email, password);
+      signInWithEmailAndPassword(email, password)
 
-  const handleSubmit = e => {
-    e.preventDefault();
-    console.log(email, password);
-    signInWithEmailAndPassword(email, password)
-  }
-
-   const handleGoogleSignIn = () => {
-        signInWithGoogle();
+      if(!user) {
+          notify();
+      }
     }
-
+    
+    const handleGoogleSignIn = () => {
+      signInWithGoogle();
+    }
+    
   return (
     <div className='login-container'>
       <div className='image-container'>
-        <img className='image' src={twitterImage} alt="" />
       </div>
       <div className='form-container'>
         <div className='form-box'>
-          <TwitterIcon  style={{color:'skyblue'}}/>
-          <h2 className='heading'>Happening Now</h2>
-          <h2 className='heading1'>Whats happening Today</h2>
+          <h2 className='heading'>Join Us</h2>
+          <h2 className='heading1'>Start Posting</h2>
         <form onSubmit={handleSubmit}>
           <input
             type='email'
@@ -100,6 +103,7 @@ const Login = () => {
                     </Link>
                 </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };
