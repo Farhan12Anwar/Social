@@ -7,8 +7,8 @@ import RepeatIcon from "@mui/icons-material/Repeat";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import PublishIcon from "@mui/icons-material/Publish";
 
-function Post({ p, onRetweet }) {
-  const { name, email, username, photo, post, profilePhoto } = p;
+function Post({ p, onRetweet, likes, setLikes }) {
+  const { _id, name, email, username, photo, post, profilePhoto } = p;
 
   const handlePostClick = () => {
     console.log("Post.js line-15");
@@ -27,10 +27,18 @@ function Post({ p, onRetweet }) {
   }
 
   const handleRetweet = () => {
-    // Pass the image URL to the onRetweet callback
     onRetweet(photo);
-    // Scroll to the top of the page
+  };
 
+  const handleLike = () => {
+    setLikes(prevLikes => {
+      const newLikes = [...prevLikes];
+      if (newLikes.includes(_id)) {
+        return newLikes.filter(likeId => likeId !== _id);
+      } else {
+        return [...newLikes, _id];
+      }
+    });
   };
 
   return (
@@ -43,7 +51,7 @@ function Post({ p, onRetweet }) {
           <div className="post_headerText">
             <h3>{name}{" "}
               <span className="post_headerSpecial">
-                <VerifiedUserIcon className="post_badge" /> @{username}
+                @{username}
               </span>
             </h3>
           </div>
@@ -62,7 +70,11 @@ function Post({ p, onRetweet }) {
             <span className="icon_placeholder">Retweet</span>
           </div>
           <div className="post_footer_icon_container">
-            <FavoriteBorderIcon className="post_footer_icon" fontSize="small" />
+            <FavoriteBorderIcon 
+              className={`post_footer_icon ${likes.includes(_id) ? 'liked' : ''}`} 
+              fontSize="small" 
+              onClick={handleLike} 
+            />
             <span className="icon_placeholder">Like</span>
           </div>
           <div className="post_footer_icon_container">

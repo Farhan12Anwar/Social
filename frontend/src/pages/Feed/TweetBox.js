@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./TweetBox.css";
 import { Avatar, Button } from "@mui/material";
 import AddPhotoAlternateOutlinedIcon from '@mui/icons-material/AddPhotoAlternateOutlined';
+import CancelIcon from '@mui/icons-material/Cancel';
 import axios from 'axios';
 import useLoggedInUser from "../../hooks/useLoggedInUser";
 import auth from "../../firebase.init";
@@ -9,7 +10,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const TweetBox = ({ setPosts, updatePosts, retweetImage, setRetweetImage  }) => {
+const TweetBox = ({ setPosts, updatePosts, retweetImage, setRetweetImage }) => {
     const [post, setPost] = useState('');
     const [imageURL, setImageURL] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -43,7 +44,6 @@ const TweetBox = ({ setPosts, updatePosts, retweetImage, setRetweetImage  }) => 
         console.log('Tweet');
         e.preventDefault();
         
-        // Check if tweet is empty and no image is uploaded
         if (!post.trim() && !imageURL && !retweetImage) {
             toast.error("The tweet cannot be empty!");
             return;
@@ -53,26 +53,26 @@ const TweetBox = ({ setPosts, updatePosts, retweetImage, setRetweetImage  }) => 
             try {
                 const response = await fetch(`http://localhost:5000/loggodInUser/${email}`);
                 const data = await response.json();
-                console.log("Fetched user data:", data); // Log fetched user data for debugging
+                console.log("Fetched user data:", data);
                 const fetchedName = data[0]?.name;
                 const fetchedUsername = data[0]?.username;
                 setName(fetchedName);
                 setUsername(fetchedUsername);
-                submitTweet(fetchedName, fetchedUsername); // Call submitTweet function after fetching user data
+                submitTweet(fetchedName, fetchedUsername);
             } catch (error) {
-                console.error("Error fetching user data:", error); // Log error if fetching user data fails
+                console.error("Error fetching user data:", error);
             }
         } else {
             const displayName = user?.displayName;
             const userUsername = email?.split('@')[0];
             setName(displayName);
             setUsername(userUsername);
-            submitTweet(displayName, userUsername); // Call submitTweet function directly if user authentication method is not 'password'
+            submitTweet(displayName, userUsername);
         }
     };
     
     const submitTweet = (name, username) => {
-        console.log("Submitting tweet with user:", name, username); // Log user name and username for debugging
+        console.log("Submitting tweet with user:", name, username);
         if (email) {
             console.log(name)
             const userPost = {
@@ -107,6 +107,10 @@ const TweetBox = ({ setPosts, updatePosts, retweetImage, setRetweetImage  }) => 
         }
     };
 
+    const handleCancelRetweetImage = () => {
+        setRetweetImage('');
+    };
+
     return (
         <div className="tweetBox">
             <form onSubmit={handleTweet}>
@@ -119,8 +123,19 @@ const TweetBox = ({ setPosts, updatePosts, retweetImage, setRetweetImage  }) => 
                         onChange={(e) => setPost(e.target.value)}
                     />
                 </div>
-                {imageURL && <img src={imageURL} alt="Uploaded Image" style={{ maxWidth: "100%", height: "50vh" }} />} {/* Apply styles to adjust the size */}
-                {retweetImage && !imageURL && <img src={retweetImage} alt="Retweeted Image" style={{ maxWidth: "100%", height: "50vh" }} />} {/* Apply styles to adjust the size */}
+                {imageURL && (
+                    <div className="image-preview">
+                        <img src={imageURL} alt="Uploaded Image" style={{ maxWidth: "100%", height: "50vh" }} />
+                    </div>
+                )}
+                {retweetImage && (
+                    <div className="retweet-image-preview">
+                        <div className="cancelIcon-Cover">
+                        <CancelIcon className="cancel-icon" onClick={handleCancelRetweetImage} />
+                        </div>
+                        <img src={retweetImage} alt="Retweet Image" style={{ maxWidth: "100%", height: "50vh" }} />
+                    </div>
+                )}
                 <div className="imageIcon_tweetButton">
                     <label htmlFor='image' className="imageIcon">
                         {

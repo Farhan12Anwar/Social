@@ -39,10 +39,7 @@ async function run() {
           console.error('Error deleting post:', error);
           res.status(500).json({ error: 'Internal server error' });
       }
-  });
-    
-    
-      
+  });   
 
     app.get('/post', async (req, res) => {
       const post = await postCollection.find().toArray();
@@ -80,7 +77,35 @@ async function run() {
       res.send(result);
     });
       
-    
+    app.post('./like', async (req, res) => {
+      const postId = req.body._id;
+      const name = req.body.name;
+      const result = await postCollection.insertOne(post);
+      res.send(result)
+    })
+
+    // server.js
+app.patch('/posts/:postId/like', async (req, res) => {
+  const postId = req.params.postId;
+  const { email } = req.body; // Assume you are sending the user's email with the request body
+
+  try {
+    // Increment the likes field by 1
+    const result = await postCollection.updateOne(
+      { _id: new ObjectId(postId) },
+      { $addToSet: { likes: email } } // Use $addToSet to avoid duplicate likes from the same user
+    );
+    if (result.modifiedCount === 1) {
+      res.status(200).json({ message: 'Post liked successfully' });
+    } else {
+      res.status(404).json({ error: 'Post not found or already liked by this user' });
+    }
+  } catch (error) {
+    console.error('Error liking post:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 
     app.patch('/userUpdates/:email', async (req, res) => {
       const filter = req.params;

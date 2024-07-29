@@ -57,7 +57,21 @@
 
 .uploadedImage {
     max-width: 100%;
-    /* Set maximum width to fit container */
     max-height: 300px;
-    /* Set maximum height */
+}
+
+.retweet-image-preview {
+    display:contents;
+    position: relative;
+}
+
+.cancel-icon {
+    width: 100%;
+    background-color: red;
+}
+
+.cancelIcon-Cover {
+    width:100%;
+    display:flex;
+    justify-content: end;
 }

@@ -126,3 +126,7 @@
     opacity: 1;
   }
   
+  /* Post.css */
+.post_footer_icon.liked {
+  color: red;
+}
