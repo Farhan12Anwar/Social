@@ -1,6 +1,4 @@
 import {React, useState} from 'react';
-import twitterImage from '../../assets/images/twitter.jpeg';
-import TwitterIcon from '@mui/icons-material/Twitter';
 import {useCreateUserWithEmailAndPassword,useSignInWithGoogle} from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
 import GoogleButton from 'react-google-button';
@@ -61,11 +59,9 @@ const [
     return (
         <div className='login-container'>
             <div className='image-container'>
-                <img className='image' src={twitterImage} alt="" />
             </div>
             <div className='form-container'>
                 <div className='form-box'>
-                <TwitterIcon className='Twittericon' style={{color:'skyblue'}} />
                 <h2 className='heading'>Happening Now</h2>
                 <h2 className='heading1'>Join Twitter Today</h2>
                 <form onSubmit={handleSubmit}>

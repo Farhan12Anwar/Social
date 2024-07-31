@@ -43,7 +43,7 @@ const Sidebar = ({ handleLogout, user }) => {
                 <SidebarOptions active Icon={HomeIcon} text='Home' />
             </CustomLink>
 
-            <CustomLink to='/home/messages'>
+            {/* <CustomLink to='/home/messages'>
                 <SidebarOptions active Icon={MailOutlineIcon} text='Messages' />
             </CustomLink>
 
@@ -61,15 +61,15 @@ const Sidebar = ({ handleLogout, user }) => {
 
             <CustomLink to='/home/poll'>
                 <SidebarOptions active Icon={ListAltIcon} text='Poll' />
-            </CustomLink>
+            </CustomLink> */}
 
             <CustomLink to='/home/profile'>
                 <SidebarOptions active Icon={PermIdentityIcon} text='Profile' />
             </CustomLink> 
 
-            <CustomLink to='/home/more'>
+            {/* <CustomLink to='/home/more'>
                 <SidebarOptions active Icon={MoreIcon} text='More' />
-            </CustomLink> 
+            </CustomLink>  */}
 
             <CustomLink to='/home/feed'>
                 <Button variant='outlined' className='sidebar_tweet'>
