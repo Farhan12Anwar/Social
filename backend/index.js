@@ -18,12 +18,14 @@ const client = new MongoClient(uri, {
   }
 });
 
+
 async function run() {
   try {
     await client.connect();
     console.log("Connected to MongoDB!");
     const postCollection = client.db('database').collection('posts');
     const userCollection = client.db('database').collection('users');
+    
 
     app.delete('/posts/:postId', async (req, res) => {
       const postId = req.params.postId; 
@@ -71,40 +73,77 @@ async function run() {
       res.send(result);
     });
 
+    
     app.post('/register', async (req, res) => {
       const user = req.body;
       const result = await userCollection.insertOne(user);
       res.send(result);
     });
-      
-    app.post('./like', async (req, res) => {
-      const postId = req.body._id;
-      const name = req.body.name;
-      const result = await postCollection.insertOne(post);
-      res.send(result)
-    })
+    
+    const Post = mongoose.model('Post', postSchema);
+    app.post('/api/posts/:id/like', async (req, res) => {
+      try {
+        const postId = req.params.id;
+        const { userId } = req.body;
+    
+        const post = await Post.findById(postId);
+        if (!post.likes.includes(userId)) {
+          post.likes.push(userId);
+          await post.save();
+        }
+    
+        res.json(post);
+      } catch (error) {
+        res.status(500).json({ error: 'Failed to like the post' });
+      }
+    });
+    
+    app.post('/api/posts/:id/unlike', async (req, res) => {
+      try {
+        const postId = req.params.id;
+        const { userId } = req.body;
+    
+        const post = await Post.findById(postId);
+        post.likes = post.likes.filter(id => id !== userId);
+        await post.save();
+    
+        res.json(post);
+      } catch (error) {
+        res.status(500).json({ error: 'Failed to unlike the post' });
+      }
+    });
 
     // server.js
-app.patch('/posts/:postId/like', async (req, res) => {
-  const postId = req.params.postId;
-  const { email } = req.body; // Assume you are sending the user's email with the request body
-
-  try {
-    // Increment the likes field by 1
-    const result = await postCollection.updateOne(
-      { _id: new ObjectId(postId) },
-      { $addToSet: { likes: email } } // Use $addToSet to avoid duplicate likes from the same user
-    );
-    if (result.modifiedCount === 1) {
-      res.status(200).json({ message: 'Post liked successfully' });
-    } else {
-      res.status(404).json({ error: 'Post not found or already liked by this user' });
-    }
-  } catch (error) {
-    console.error('Error liking post:', error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-});
+    app.post('/api/posts/:id/like', async (req, res) => {
+      try {
+        const postId = req.params.id;
+        const userId = req.body.userId; // Assume user ID is sent in the request body
+    
+        const post = await Post.findById(postId);
+        if (!post.likes.includes(userId)) {
+          post.likes.push(userId);
+        }
+        await post.save();
+        res.json(post);
+      } catch (error) {
+        res.status(500).json({ error: 'Failed to like the post' });
+      }
+    });
+    
+    app.post('/api/posts/:id/unlike', async (req, res) => {
+      try {
+        const postId = req.params.id;
+        const userId = req.body.userId; // Assume user ID is sent in the request body
+    
+        const post = await Post.findById(postId);
+        post.likes = post.likes.filter(id => id !== userId);
+        await post.save();
+        res.json(post);
+      } catch (error) {
+        res.status(500).json({ error: 'Failed to unlike the post' });
+      }
+    });
+    
 
 
     app.patch('/userUpdates/:email', async (req, res) => {

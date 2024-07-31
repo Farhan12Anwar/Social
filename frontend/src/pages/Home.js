@@ -22,7 +22,7 @@ function Home() {
     <div className='app'>
       <Sidebar handleLogout={handleLogout} user={user}/>
       <Outlet />
-      <Widgets />
+      {/* <Widgets /> */}
     </div>
   )
 }

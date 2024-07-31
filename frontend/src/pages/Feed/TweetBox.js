@@ -81,8 +81,10 @@ const TweetBox = ({ setPosts, updatePosts, retweetImage, setRetweetImage }) => {
                 name: name,
                 email: email,
                 post: post,
-                photo: imageURL || retweetImage
+                photo: imageURL || retweetImage,
+                likes: { type: [String], default: [] },
             };
+            
 
             fetch('http://localhost:5000/post', {
                 method: "POST",
@@ -109,6 +111,7 @@ const TweetBox = ({ setPosts, updatePosts, retweetImage, setRetweetImage }) => {
 
     const handleCancelRetweetImage = () => {
         setRetweetImage('');
+        setImageURL('');
     };
 
     return (
@@ -125,6 +128,9 @@ const TweetBox = ({ setPosts, updatePosts, retweetImage, setRetweetImage }) => {
                 </div>
                 {imageURL && (
                     <div className="image-preview">
+                          <div className="cancelIcon-Cover">
+                          <CancelIcon className="cancel-icon" onClick={handleCancelRetweetImage} />
+                        </div>
                         <img src={imageURL} alt="Uploaded Image" style={{ maxWidth: "100%", height: "50vh" }} />
                     </div>
                 )}

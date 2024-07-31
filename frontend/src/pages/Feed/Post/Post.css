@@ -130,3 +130,10 @@
 .post_footer_icon.liked {
   color: red;
 }
+
+.like_count {
+  text-align: center;
+  font-size: 14px;
+  color: #555;
+  margin-top: 5px;
+}

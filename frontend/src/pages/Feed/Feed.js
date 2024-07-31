@@ -6,7 +6,7 @@ import TweetBox from "./TweetBox";
 function Feed() {
     const [posts, setPosts] = useState([]);
     const [retweetImage, setRetweetImage] = useState('');
-    const [likes, setLikes] = useState([]); // Initialize likes state
+    const [likes, setLikes] = useState([]);
 
     const updatePosts = (newPosts) => {
         setPosts(newPosts);

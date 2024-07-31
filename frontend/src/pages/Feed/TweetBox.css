@@ -65,6 +65,11 @@
     position: relative;
 }
 
+    .image-preview {
+        display:contents;
+        position: relative;
+    }
+
 .cancel-icon {
     width: 100%;
     background-color: red;

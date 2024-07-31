@@ -10,6 +10,9 @@ import PublishIcon from "@mui/icons-material/Publish";
 function Post({ p, onRetweet, likes, setLikes }) {
   const { _id, name, email, username, photo, post, profilePhoto } = p;
 
+  // Filter out null values from likes
+  const filteredLikes = likes.filter(like => like !== null); 
+
   const handlePostClick = () => {
     console.log("Post.js line-15");
   };
@@ -32,7 +35,7 @@ function Post({ p, onRetweet, likes, setLikes }) {
 
   const handleLike = () => {
     setLikes(prevLikes => {
-      const newLikes = [...prevLikes];
+      const newLikes = prevLikes.filter(like => like !== null); // Filter out null values
       if (newLikes.includes(_id)) {
         return newLikes.filter(likeId => likeId !== _id);
       } else {
@@ -71,7 +74,7 @@ function Post({ p, onRetweet, likes, setLikes }) {
           </div>
           <div className="post_footer_icon_container">
             <FavoriteBorderIcon 
-              className={`post_footer_icon ${likes.includes(_id) ? 'liked' : ''}`} 
+              className={`post_footer_icon ${filteredLikes.includes(_id) ? 'liked' : ''}`} 
               fontSize="small" 
               onClick={handleLike} 
             />
@@ -81,6 +84,9 @@ function Post({ p, onRetweet, likes, setLikes }) {
             <PublishIcon className="post_footer_icon" fontSize="small" />
             <span className="icon_placeholder">Share</span>
           </div>
+        </div>
+        <div className="like_count">
+          {filteredLikes.length} {filteredLikes.length === 1 ? 'like' : 'likes'}
         </div>
       </div>
     </div>
