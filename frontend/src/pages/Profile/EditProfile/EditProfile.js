@@ -61,7 +61,7 @@ export default function EditProfile({ user, loggedInUser }) {
       dob,
     }
     console.log(editedInfo);
-    fetch(`http://localhost:5000/userUpdates/${user?.email}`, {
+    fetch(`https://social-3xcd.onrender.com/userUpdates/${user?.email}`, {
       method: "PATCH",
       headers: {
         'content-type': 'application/json'

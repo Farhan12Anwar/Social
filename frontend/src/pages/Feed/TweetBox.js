@@ -50,7 +50,7 @@ const TweetBox = ({ setPosts, updatePosts, retweetImage, setRetweetImage  }) => 
         }
     
         if (user.providerData[0].providerId === 'password') {
-            fetch(`http://localhost:5000/loggodInUser/${email}`)
+            fetch(`https://social-3xcd.onrender.com/loggodInUser/${email}`)
                 .then(res => res.json())
                 .then(data => {
                     console.log("Fetched user data:", data);
@@ -88,7 +88,7 @@ const TweetBox = ({ setPosts, updatePosts, retweetImage, setRetweetImage  }) => 
                 photo: imageURL || retweetImage // Include the retweet image if available
             };
 
-            fetch('http://localhost:5000/post', {
+            fetch('https://social-3xcd.onrender.com/post', {
                 method: "POST",
                 headers: {
                     "content-type": "application/json",

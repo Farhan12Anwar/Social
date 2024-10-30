@@ -41,7 +41,7 @@ const Signup = () => {
       email: email,
     };
 
-    axios.post(`http://localhost:5000/register`, user)
+    axios.post(`https://social-3xcd.onrender.com/register`, user)
       .then(response => console.log(response.data))
       .catch(error => console.log(error));
   };

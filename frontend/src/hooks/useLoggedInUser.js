@@ -8,7 +8,7 @@ const useLoggedInUser = () => {
     const [loggedInUser, setLoggedInUser] = useState({});
 
     useEffect(() => {
-        fetch(`http://localhost:5000/loggodInUser?email=${email}`)
+        fetch(`https://social-3xcd.onrender.com/loggodInUser?email=${email}`)
             .then(res => res.json())
             .then(data => {
                 setLoggedInUser(data);
