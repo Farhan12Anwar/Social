@@ -12,6 +12,7 @@ import Bookmarks from './pages/Bookmarks/Bookmarks.js';
 import Poll from './pages/Poll/Poll.js';
 import Profile from './pages/Profile/Profile.js';
 import More from './pages/More/More.js';
+import UserProfile from './pages/Profile/UserProfile/UserProfile.js';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           </Route>
           <Route path='/home' element={<ProtectedRoute><Home /></ProtectedRoute>}>
             <Route path='feed' element={<Feed />} />
+            <Route path='userProfile' element={<UserProfile />} />
             <Route path='topPosts' element={<TopPosts />} />
             <Route path='notifications' element={<Notifications />} />
             <Route path='messages' element={<Messages />} />

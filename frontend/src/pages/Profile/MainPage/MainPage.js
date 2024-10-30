@@ -77,6 +77,7 @@ const MainProfile = ({ user }) => {
       console.error('Error deleting post:', error);
     });
   };
+  
 
   const handleUploadProfileImage = (e) => {
     setIsLoading(true);
@@ -91,6 +92,7 @@ const MainProfile = ({ user }) => {
           email: user?.email,
           profileImage: url,
         };
+        
         setIsLoading(false);
 
         if (url) {
@@ -99,11 +101,12 @@ const MainProfile = ({ user }) => {
             headers: {
               'content-type': 'application/json'
             },
-            body: JSON.stringify(userProfileImage),
+            body: JSON.stringify(userProfileImage.profileImage),
           })
             .then(res => res.json())
             .then(data => {
               console.log('done', data);
+              console.log(userProfileImage.profileImage)
             });
         }
       })
@@ -126,7 +129,8 @@ const MainProfile = ({ user }) => {
         <div className='profile-bio'>
           <div>
             <div className='coverImageContainer'>
-              <img src={loggedInUser[0]?.coverImage ? loggedInUser[0]?.coverImage : 'https://www.proactivechannel.com/Files/BrandImages/Default.jpg'} alt="" className='coverImage' />
+              <img src={
+                loggedInUser[0]?.coverImage ? loggedInUser[0]?.coverImage : 'https://www.proactivechannel.com/Files/BrandImages/Default.jpg'} alt="" className='coverImage' />
               <div className='hoverCoverImage'>
                 <div className="imageIcon_tweetButton">
                   <label htmlFor='image' className="imageIcon">
@@ -138,7 +142,10 @@ const MainProfile = ({ user }) => {
             </div>
             <div className='avatar-img'>
               <div className='avatarContainer'>
-                <img src={loggedInUser[0]?.profileImage ? loggedInUser[0]?.profileImage : "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png"} className="avatar" alt='' />
+              <img src={
+  loggedInUser[0]?.profileImage ? loggedInUser[0].profileImage : "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png"
+} className="avatar" alt='' />
+
                 <div className='hoverAvatarImage'>
                   <div className="imageIcon_tweetButton">
                     <label htmlFor='profileImage' className="imageIcon">

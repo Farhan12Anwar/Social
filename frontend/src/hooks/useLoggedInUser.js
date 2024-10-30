@@ -11,7 +11,6 @@ const useLoggedInUser = () => {
         fetch(`http://localhost:5000/loggodInUser?email=${email}`)
             .then(res => res.json())
             .then(data => {
-                // console.log(data);
                 setLoggedInUser(data);
             })
                

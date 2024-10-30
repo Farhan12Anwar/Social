@@ -1,5 +1,6 @@
 import React from "react";
 import "./Post.css";
+import { Link, useNavigate} from "react-router-dom";
 import { Avatar } from "@mui/material";
 import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
@@ -14,6 +15,8 @@ function Post({ p, onRetweet }) {
     console.log("Post.js line-15");
   };
 
+  const navigate = useNavigate();
+
   async function downloadImage(imageSrc, nameOfDownload = 'my-image.png') {
     const response = await fetch(imageSrc);
     const blobImage = await response.blob();
@@ -27,12 +30,13 @@ function Post({ p, onRetweet }) {
   }
 
   const handleRetweet = () => {
-    // Pass the image URL to the onRetweet callback
     onRetweet(photo);
-    // Scroll to the top of the page
-
   };
 
+  const handleUserProfile = () => {
+    navigate('/userProfile');
+  }
+   
   return (
     <div className="post" onClick={handlePostClick}>
       <div className="post_avatar">
@@ -40,7 +44,7 @@ function Post({ p, onRetweet }) {
       </div>
       <div className="post_body">
         <div className="post_header">
-          <div className="post_headerText">
+          <div className="post_headerText" onClick={handleUserProfile}>
             <h3>{name}{" "}
               <span className="post_headerSpecial">
                 <VerifiedUserIcon className="post_badge" /> @{username}

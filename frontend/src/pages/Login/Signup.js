@@ -23,7 +23,7 @@ const Signup = () => {
   }
 
   if (error) {
-    console.log(error.message);
+    console.log(error.message);   
   }
 
   if (loading) {
